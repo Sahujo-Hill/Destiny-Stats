@@ -1,67 +1,73 @@
-﻿@using DestinyProjectApp.Services
+﻿@using DestinyProjectApp.Models
+@using DestinyProjectApp.Services
+@using System.Text.Json
 @page "/Search"
 @inject DestinyApiHelper _apihelper
 
-<h3>SearchUser</h3>
+<h1>Get Stats</h1>
 
-
-
-
+<input @bind="globalNamePrefix" />
 <button class="btn btn-primary" @onclick="SearchUser">
     Search
 </button>
 
 <p>@result</p>
+@if(statsResults != null)
+{
+    <p>@statsResults.Response.allPvE.allTime.activitiesCleared.basic.displayValue</p>
+}
 
 
 
-<h1>Get Stats for user</h1>
 
 
-<input @bind="characterID" type="number"/>
-<input @bind="membershipID" />
-<input @bind="membershipType" type="number" />
 
-<button class="btn btn-primary" @onclick="GetStats">
-    Get Stats
-</button>
-
-<p>@result2</p>
 
 @code {
+
+    private Root statsResults;
+ 
+
     private string globalNamePrefix;
     private int page;
     private string result;
 
     private string result2;
     long characterID;
-    long membershipID;
+    long membershipid;
     int membershipType;
 
 
     private async Task GetStats(){
         try{
-            result2 = await _apihelper.StatsSearch(characterID, membershipID, membershipType);
+            statsResults = await _apihelper.StatsSearch(0, membershipid, 1);
+            
         }
         catch(HttpRequestException ex){
-            result2 = "error";
+            result = "error";
         }
     }
 
-     private async Task SearchUser()
+    private async Task SearchUser()
     {
         try
         {
-            var searchResult = await _apihelper.SearchByGlobalNamePost(globalNamePrefix, page);
-           
+            membershipid = await _apihelper.SearchByGlobalNamePost(globalNamePrefix, page);
+            await GetStats(); // Call GetStats with the extracted membershipid
         }
         catch (HttpRequestException ex)
         {
             result = $"An error occurred: {ex.Message}";
         }
+        catch (JsonException ex)
+        {
+            result = $"An error occurred while parsing the response: {ex.Message}";
+        }
     }
-
-
-
-
 }
+  
+
+
+
+
+

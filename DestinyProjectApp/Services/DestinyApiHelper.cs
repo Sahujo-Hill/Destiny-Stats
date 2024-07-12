@@ -4,6 +4,10 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System;
 using System.Reflection.Metadata;
+using DestinyProjectApp.Models;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+
 namespace DestinyProjectApp.Services
 {
     public class DestinyApiHelper
@@ -20,32 +24,50 @@ namespace DestinyProjectApp.Services
             _httpClient.DefaultRequestHeaders.Add("X-API-Key", apiKey);
         }
 
-        public async Task<string> SearchByGlobalNamePost(string globalname, int page)
+        public async Task<long> SearchByGlobalNamePost(string globalname, int page)
         {
             var requestUrl = $"User/Search/GlobalName/{page}/";
-            var content = new StringContent(JsonSerializer.Serialize(new { displayNamePrefix = globalname }), System.Text.Encoding.UTF8, "application/json");
+            var content = new StringContent(System.Text.Json.JsonSerializer.Serialize(new { displayNamePrefix = globalname }), System.Text.Encoding.UTF8, "application/json");
             HttpResponseMessage response = await _httpClient.PostAsync(requestUrl, content);
 
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadAsStringAsync();
+                var responseString = await response.Content.ReadAsStringAsync();
+                using (JsonDocument doc = JsonDocument.Parse(responseString))
+                {
+                    var root = doc.RootElement;
+                    var membershipId = root
+                        .GetProperty("Response")
+                        .GetProperty("searchResults")[0]
+                        .GetProperty("destinyMemberships")[0]
+                        .GetProperty("membershipId")
+                        .GetString();
+
+                    return long.Parse(membershipId);
+                }
             }
             else
             {
                 throw new HttpRequestException("Incorrect Search");
             }
-
-
         }
 
-        public async Task<string> StatsSearch(long characterID, long membershipID, int membershipType)
+
+    
+
+
+        public async Task<Root> StatsSearch(long characterID, long membershipID, int membershipType)
         {
             var requesturl = $"Destiny2/{membershipType}/Account/{membershipID}/Character/{characterID}/Stats/";
             HttpResponseMessage responseMessage = await _httpClient.GetAsync(requesturl);
 
             if (responseMessage.IsSuccessStatusCode)
             {
-                return await responseMessage.Content.ReadAsStringAsync();
+                
+                var response = await responseMessage.Content.ReadAsStringAsync();
+                Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(response);
+                var result = JsonConvert.DeserializeObject<Response>(response);
+                return myDeserializedClass;
             }
             else
             {
@@ -55,5 +77,9 @@ namespace DestinyProjectApp.Services
 
         }
 
+        public class SearchResult
+        {
+            public long membershipid { get; set; }
+        }
     }
 }
