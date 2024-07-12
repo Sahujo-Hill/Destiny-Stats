@@ -1,13 +1,7 @@
-﻿<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/DestinyStats.css" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-
-@page "/"
+﻿@page "/"
+@using DestinyProjectApp.Services
+@using Newtonsoft.Json
+@inject DestinyApiHelper _apihelper
 
 <div class="frame">
 
@@ -20,54 +14,55 @@
 
         <div class="searchSection">
             <div class="usernameTitle">Username:</div>
-            <input class="usernameEntry"/>
+            <input @bind="globalNamePrefix" class="usernameEntry"/>
 
             <div class="platformTitle">Platform:</div>
             <input class="platformEntry"/>
 
-                <img class="searchButton" src="/css/Images/seachIcon.png"/>
+                <img @onclick="SearchUser" class="searchButton" src="/css/Images/seachIcon.png"/>
         </div>
-        
-        <div class="statsSection">
+        @if (statsResults != null)
+        {
+            <div class="statsSection">
 
-            <div class="miscSection whiteBG">
-                <div class="miscTitle">Miscellaneous</div>
-                <table class="miscTable">
-                    <tr>
+                <div class="miscSection whiteBG">
+                    <div class="miscTitle">Miscellaneous</div>
+                    <table class="miscTable">
+                        <tr>
                         <td>Suicides</td>
-                        <td>EMPTY</td>
+                        <td>@statsResults.Response.allPvE.allTime.suicides.basic.displayValue</td>
+                        </tr>
+                    <tr>
+                        <td>Strike Deaths</td>
+                        <td>@statsResults.Response.allStrikes.allTime.deaths.basic.displayValue</td>
                     </tr>
                     <tr>
-                        <td>Gambit Invasions</td>
-                        <td>EMPTY</td>
+                        <td>Avg Strike Kill Dist</td>
+                        <td>@statsResults.Response.allStrikes.allTime.averageKillDistance.basic.displayValue</td>
                     </tr>
                     <tr>
-                        <td>Avg Kill Distance</td>
-                        <td>EMPTY</td>
-                    </tr>
-                    <tr>
-                        <td>Avg Lifespan</td>
-                        <td>EMPTY</td>
+                        <td>Avg Raid Lifespan</td>
+                        <td>@statsResults.Response.raid.allTime.averageLifespan.basic.displayValue</td>
                     </tr>
                     <tr>
                         <td>Heroic Public Events</td>
-                        <td>EMPTY</td>
+                        <td>@statsResults.Response.allPvE.allTime.heroicPublicEventsCompleted.basic.displayValue</td>
                     </tr>
                     <tr>
                         <td>Highest Light Level</td>
-                        <td>EMPTY</td>
+                        <td>@statsResults.Response.allPvE.allTime.highestLightLevel.basic.displayValue</td>
                     </tr>
                     <tr>
                         <td>Adventures Completed</td>
-                        <td>EMPTY</td>
+                        <td>@statsResults.Response.allPvE.allTime.adventuresCompleted.basic.displayValue</td>
                     </tr>
                     <tr>
-                        <td>Revives Performed</td>
-                        <td>EMPTY</td>
+                        <td>Raid Revives Performed</td>
+                        <td>@statsResults.Response.raid.allTime.resurrectionsPerformed.basic.displayValue</td>
                     </tr>
                     <tr>
-                        <td>Revives Received</td>
-                        <td>EMPTY</td>
+                        <td>Raid Revives Received</td>
+                        <td>@statsResults.Response.raid.allTime.resurrectionsReceived.basic.displayValue</td>
                     </tr>
                 </table>
             </div>
@@ -79,78 +74,78 @@
                     <table class="pveTableLeft">
                         <tr>
                             <td>Activities Cleared</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.activitiesCleared.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.kills.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Deaths</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.deaths.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Assists</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.assists.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Precision Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.precisionKills.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Orbs Gathered</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.orbsGathered.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Orbs Dropped</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.orbsDropped.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Avg Lifespan</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.averageLifespan.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Best Single Game Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.bestSingleGameKills.basic.displayValue</td>
                         </tr>
                     </table>
 
                     <table class="pveTableRight">
                         <tr>
                             <td>Super Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.weaponKillsSuper.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Ability Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.weaponKillsAbility.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Melee Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.weaponKillsMelee.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Grenade Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.weaponKillsGrenade.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Hand Cannon Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.weaponKillsHandCannon.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Auto-Rifle Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.weaponKillsAutoRifle.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Sword Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.weaponKillsSword.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Shotgun Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.weaponKillsShotgun.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Sniper Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvE.allTime.weaponKillsSniper.basic.displayValue</td>
                         </tr>
                     </table>
 
@@ -163,79 +158,79 @@
                 <div class="multiTable">
                     <table class="pvpTableLeft">
                         <tr>
-                            <td>Activities Cleared</td>
-                            <td>EMPTY</td>
+                            <td>Win:Loss Ratio</td>
+                            <td>@statsResults.Response.allPvP.allTime.winLossRatio.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvP.allTime.kills.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Deaths</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvP.allTime.deaths.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Assists</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvP.allTime.assists.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Precision Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvP.allTime.precisionKills.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Orbs Gathered</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvP.allTime.orbsGathered.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Orbs Dropped</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvP.allTime.orbsDropped.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Avg Lifespan</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvP.allTime.averageLifespan.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Best Single Game Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvP.allTime.bestSingleGameKills.basic.displayValue</td>
                         </tr>
                     </table>
 
                     <table class="pvpTableRight">
                         <tr>
                             <td>Super Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvP.allTime.weaponKillsSuper.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Ability Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvP.allTime.weaponKillsAbility.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Melee Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvP.allTime.weaponKillsMelee.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Grenade Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvP.allTime.weaponKillsGrenade.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Hand Cannon Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvP.allTime.weaponKillsHandCannon.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Auto-Rifle Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvP.allTime.weaponKillsAutoRifle.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Sword Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvP.allTime.weaponKillsSword.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Shotgun Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvP.allTime.weaponKillsShotgun.basic.displayValue</td>
                         </tr>
                         <tr>
                             <td>Sniper Kills</td>
-                            <td>EMPTY</td>
+                            <td>@statsResults.Response.allPvP.allTime.weaponKillsSniper.basic.displayValue</td>
                         </tr>
                     </table>
 
@@ -243,6 +238,7 @@
             </div>
 
         </div>
+        }
 
     </div>
 
@@ -250,4 +246,46 @@
 
 @code {
 
+    private Root statsResults;
+
+
+    private string globalNamePrefix;
+    private int page;
+    private string result;
+
+    private string result2;
+    long characterID;
+    long membershipid;
+    int membershipType;
+
+
+    private async Task GetStats()
+    {
+        try
+        {
+            statsResults = await _apihelper.StatsSearch(0, membershipid, 1);
+
+        }
+        catch (HttpRequestException ex)
+        {
+            result = "error";
+        }
+    }
+
+    private async Task SearchUser()
+    {
+        try
+        {
+            membershipid = await _apihelper.SearchByGlobalNamePost(globalNamePrefix, page);
+            await GetStats(); // Call GetStats with the extracted membershipid
+        }
+        catch (HttpRequestException ex)
+        {
+            result = $"An error occurred: {ex.Message}";
+        }
+        catch (JsonException ex)
+        {
+            result = $"An error occurred while parsing the response: {ex.Message}";
+        }
+    }
 }

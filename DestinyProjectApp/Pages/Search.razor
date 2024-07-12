@@ -17,12 +17,6 @@
     <p>@statsResults.Response.allPvE.allTime.activitiesCleared.basic.displayValue</p>
 }
 
-
-
-
-
-
-
 @code {
 
     private Root statsResults;
@@ -53,6 +47,7 @@
         try
         {
             membershipid = await _apihelper.SearchByGlobalNamePost(globalNamePrefix, page);
+
             await GetStats(); // Call GetStats with the extracted membershipid
         }
         catch (HttpRequestException ex)
