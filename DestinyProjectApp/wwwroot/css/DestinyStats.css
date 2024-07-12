@@ -1,0 +1,294 @@
+﻿main {
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+}
+
+input {
+    font-family: Inter;
+    font-size: 18px;
+    letter-spacing: 5px;
+}
+
+.frame {
+    width: 100%;
+    height: 1080px;
+}
+
+.whiteBG {
+    background-color: white;
+}
+
+.jost {
+    font-family: "Jost", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.inter {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings: "slnt" 0;
+}
+
+.titleSection {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.destiny2Logo {
+    width: 960px;
+    height: 148px;
+    margin-left: -25px;
+}
+
+.statisticsTitle {
+    margin-left: 10px;
+    margin-top: -20px;
+    margin-bottom: 139px;
+    color: #FFF;
+    font-family: Jost;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 27.36px;
+}
+
+.searchSection {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    justify-content: flex-end;
+    gap: 30px;
+}
+
+.usernameTitle {
+    color: #FFF;
+    font-family: Jost;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 6.4px;
+    margin-right: -30px;
+}
+
+.usernameEntry {
+
+}
+
+.platformTitle {
+    color: #FFF;
+    font-family: Jost;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 6.4px;
+    margin-right: -30px;
+}
+
+.platformEntry {
+
+}
+
+.searchButton {
+    width: 43px;
+    height: 43px;
+    padding-right: 7px;
+    padding-top: 7px;
+}
+
+.statsSection {
+    display: flex;
+    width: 100%;
+    height: 605px;
+    flex-shrink: 0;
+    background-image: url(Images/statsSectionBG.png);
+    flex-direction: row;
+    border-radius: 40px;
+    padding: 20px;
+    gap: 150px;
+}
+
+.miscSection {
+    padding: 20px;
+    width: 375px;
+    height: 540px;
+    flex-shrink: 0;
+    flex-direction: column;
+    background: #D9D9D9;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+.miscTitle {
+    padding: 20px 64px 0px 0px;
+    color: #000;
+    font-family: Jost;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 6.4px;
+}
+
+.miscTable {
+    width: 328px;
+    height: 442px;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-shrink: 0;
+}
+
+    .miscTable tr {
+        border-bottom: 1px solid black;
+    }
+
+    .miscTable tr:last-child {
+        border-bottom: 0px solid white;
+    }
+
+    .miscTable td {
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 150%;
+    }
+
+.multiTable {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.pveSection {
+    margin-right: -45px;
+    padding: 20px;
+    width: 569px;
+    height: 540px;
+    flex-shrink: 0;
+    flex-direction: column;
+    background: #D9D9D9;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+    .pveSection table tr {
+        border-bottom: 1px solid black;
+    }
+
+    .pveTableLeft tr:last-child {
+        border-bottom: 0px solid white;
+    }
+
+    .pveTableRight tr:last-child {
+        border-bottom: 0px solid white;
+    }
+
+.pveTitle {
+    padding: 20px 64px 0px 0px;
+    color: #000;
+    font-family: Jost;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 6.4px;
+}
+
+.pveTableLeft {
+    width: 300px;
+    height: 442px;
+}
+
+    .pveTableLeft td {
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 150%;
+    }
+
+.pveTableRight {
+    width: 300px;
+    height: 442px;
+}
+
+    .pveTableRight td {
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 150%;
+    }
+
+.pvpSection {
+    padding: 20px;
+    width: 569px;
+    height: 540px;
+    flex-shrink: 0;
+    flex-direction: column;
+    background: #D9D9D9;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+    .pvpSection table tr {
+        border-bottom: 1px solid black;
+    }
+
+    .pvpTableLeft tr:last-child {
+        border-bottom: 0px solid white;
+    }
+
+    .pvpTableRight tr:last-child {
+        border-bottom: 0px solid white;
+    }
+
+.pvpTitle {
+    padding: 20px 64px 0px 0px;
+    color: #000;
+    font-family: Jost;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 6.4px;
+}
+
+.pvpTableLeft {
+    width: 300px;
+    height: 442px;
+}
+
+    .pvpTableLeft td {
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 150%;
+    }
+
+.pvpTableRight {
+    width: 300px;
+    height: 442px;
+}
+
+    .pvpTableRight td {
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 150%;
+    }

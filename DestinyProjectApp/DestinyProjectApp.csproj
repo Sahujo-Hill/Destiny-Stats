@@ -7,7 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\css\DestinyStats.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\Images\destiny2Logo.png" />
+    <None Include="wwwroot\css\Images\seachIcon.png" />
+    <None Include="wwwroot\css\Images\statsSectionBG.png" />
   </ItemGroup>
 
 </Project>

@@ -19,7 +19,7 @@
 
 
 <input @bind="characterID" type="number"/>
-<input @bind="globalNamePrefix"/>
+<input @bind="membershipID" />
 <input @bind="membershipType" type="number" />
 
 <button class="btn btn-primary" @onclick="GetStats">
@@ -35,16 +35,16 @@
 
     private string result2;
     long characterID;
-    long membershipid;
+    long membershipID;
     int membershipType;
 
 
     private async Task GetStats(){
         try{
-            result = await _apihelper.StatsSearch(characterID, membershipid, membershipType);
+            result2 = await _apihelper.StatsSearch(characterID, membershipID, membershipType);
         }
         catch(HttpRequestException ex){
-            result = "error";
+            result2 = "error";
         }
     }
 
