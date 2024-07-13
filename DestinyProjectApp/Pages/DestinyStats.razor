@@ -3,253 +3,249 @@
 @using Newtonsoft.Json
 @inject DestinyApiHelper _apihelper
 
-<div class="frame">
-
-    <div class="background">
-
-        <div class="titleSection>">
-            <img src="/css/Images/destiny2Logo.png" alt="destiny-2-logo" class="destiny2Logo" />
-            <div class="statisticsTitle">Statistics</div>
-        </div>
-
-        <div class="searchSection">
-            <div class="usernameTitle">Username:</div>
-            <input @bind="globalNamePrefix" class="usernameEntry"/>
-
-            <div class="platformTitle">Platform:</div>
-            <select @bind="membershipType">
-                @foreach(var platform in Enum.GetValues(typeof(Platform)))
-                {
-                    <option value="@((int)platform)">@platform</option>
-                }
-            </select>
-
-            <img @onclick="SearchUser" class="searchButton" src="/css/Images/seachIcon.png"/>
-            <p class="text-white">@result</p>
-
-        </div>
-        @if (statsResults != null && showStats == true)
-        {
-            <div class="statsSection">
-
-                <div class="miscSection whiteBG">
-                    <div class="miscTitle">Miscellaneous</div>
-                    <table class="miscTable">
-                        <tr>
-                        <td>Suicides</td>
-                        <td>@statsResults.Response.allPvE.allTime.suicides.basic.displayValue</td>
-                        </tr>
-                    <tr>
-                        <td>Strike Deaths</td>
-                        <td>@statsResults.Response.allStrikes.allTime.deaths.basic.displayValue</td>
-                    </tr>
-                    <tr>
-                        <td>Avg Strike Kill Dist</td>
-                        <td>@statsResults.Response.allStrikes.allTime.averageKillDistance.basic.displayValue</td>
-                    </tr>
-                    <tr>
-                        <td>Avg Raid Lifespan</td>
-                        <td>@statsResults.Response.raid.allTime.averageLifespan.basic.displayValue</td>
-                    </tr>
-                    <tr>
-                        <td>Heroic Public Events</td>
-                        <td>@statsResults.Response.allPvE.allTime.heroicPublicEventsCompleted.basic.displayValue</td>
-                    </tr>
-                    <tr>
-                        <td>Highest Light Level</td>
-                        <td>@statsResults.Response.allPvE.allTime.highestLightLevel.basic.displayValue</td>
-                    </tr>
-                    <tr>
-                        <td>Adventures Completed</td>
-                        <td>@statsResults.Response.allPvE.allTime.adventuresCompleted.basic.displayValue</td>
-                    </tr>
-                    <tr>
-                        <td>Raid Revives Performed</td>
-                        <td>@statsResults.Response.raid.allTime.resurrectionsPerformed.basic.displayValue</td>
-                    </tr>
-                    <tr>
-                        <td>Raid Revives Received</td>
-                        <td>@statsResults.Response.raid.allTime.resurrectionsReceived.basic.displayValue</td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="pveSection whiteBG">
-                <div class="pveTitle">PVE</div>
-
-                <div class="multiTable">
-                    <table class="pveTableLeft">
-                        <tr>
-                            <td>Activities Cleared</td>
-                            <td>@statsResults.Response.allPvE.allTime.activitiesCleared.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Kills</td>
-                            <td>@statsResults.Response.allPvE.allTime.kills.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Deaths</td>
-                            <td>@statsResults.Response.allPvE.allTime.deaths.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Assists</td>
-                            <td>@statsResults.Response.allPvE.allTime.assists.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Precision Kills</td>
-                            <td>@statsResults.Response.allPvE.allTime.precisionKills.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Orbs Gathered</td>
-                            <td>@statsResults.Response.allPvE.allTime.orbsGathered.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Orbs Dropped</td>
-                            <td>@statsResults.Response.allPvE.allTime.orbsDropped.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Avg Lifespan</td>
-                            <td>@statsResults.Response.allPvE.allTime.averageLifespan.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Best Single Game Kills</td>
-                            <td>@statsResults.Response.allPvE.allTime.bestSingleGameKills.basic.displayValue</td>
-                        </tr>
-                    </table>
-
-                    <table class="pveTableRight">
-                        <tr>
-                            <td>Super Kills</td>
-                            <td>@statsResults.Response.allPvE.allTime.weaponKillsSuper.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Ability Kills</td>
-                            <td>@statsResults.Response.allPvE.allTime.weaponKillsAbility.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Melee Kills</td>
-                            <td>@statsResults.Response.allPvE.allTime.weaponKillsMelee.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Grenade Kills</td>
-                            <td>@statsResults.Response.allPvE.allTime.weaponKillsGrenade.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Hand Cannon Kills</td>
-                            <td>@statsResults.Response.allPvE.allTime.weaponKillsHandCannon.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Auto-Rifle Kills</td>
-                            <td>@statsResults.Response.allPvE.allTime.weaponKillsAutoRifle.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Sword Kills</td>
-                            <td>@statsResults.Response.allPvE.allTime.weaponKillsSword.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Shotgun Kills</td>
-                            <td>@statsResults.Response.allPvE.allTime.weaponKillsShotgun.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Sniper Kills</td>
-                            <td>@statsResults.Response.allPvE.allTime.weaponKillsSniper.basic.displayValue</td>
-                        </tr>
-                    </table>
-
-                </div>
-            </div>
-
-            <div class="pvpSection whiteBG">
-                <div class="pvpTitle">PVP</div>
-
-                <div class="multiTable">
-                    <table class="pvpTableLeft">
-                        <tr>
-                            <td>Win:Loss Ratio</td>
-                            <td>@statsResults.Response.allPvP.allTime.winLossRatio.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Kills</td>
-                            <td>@statsResults.Response.allPvP.allTime.kills.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Deaths</td>
-                            <td>@statsResults.Response.allPvP.allTime.deaths.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Assists</td>
-                            <td>@statsResults.Response.allPvP.allTime.assists.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Precision Kills</td>
-                            <td>@statsResults.Response.allPvP.allTime.precisionKills.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Orbs Gathered</td>
-                            <td>@statsResults.Response.allPvP.allTime.orbsGathered.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Orbs Dropped</td>
-                            <td>@statsResults.Response.allPvP.allTime.orbsDropped.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Avg Lifespan</td>
-                            <td>@statsResults.Response.allPvP.allTime.averageLifespan.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Best Single Game Kills</td>
-                            <td>@statsResults.Response.allPvP.allTime.bestSingleGameKills.basic.displayValue</td>
-                        </tr>
-                    </table>
-
-                    <table class="pvpTableRight">
-                        <tr>
-                            <td>Super Kills</td>
-                            <td>@statsResults.Response.allPvP.allTime.weaponKillsSuper.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Ability Kills</td>
-                            <td>@statsResults.Response.allPvP.allTime.weaponKillsAbility.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Melee Kills</td>
-                            <td>@statsResults.Response.allPvP.allTime.weaponKillsMelee.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Grenade Kills</td>
-                            <td>@statsResults.Response.allPvP.allTime.weaponKillsGrenade.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Hand Cannon Kills</td>
-                            <td>@statsResults.Response.allPvP.allTime.weaponKillsHandCannon.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Auto-Rifle Kills</td>
-                            <td>@statsResults.Response.allPvP.allTime.weaponKillsAutoRifle.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Sword Kills</td>
-                            <td>@statsResults.Response.allPvP.allTime.weaponKillsSword.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Shotgun Kills</td>
-                            <td>@statsResults.Response.allPvP.allTime.weaponKillsShotgun.basic.displayValue</td>
-                        </tr>
-                        <tr>
-                            <td>Sniper Kills</td>
-                            <td>@statsResults.Response.allPvP.allTime.weaponKillsSniper.basic.displayValue</td>
-                        </tr>
-                    </table>
-
-                </div>
-            </div>
-
-        </div>
-        }
-
+<div class="mainContainer">
+    <div class="titleSection>">
+        <img src="/css/Images/destiny2Logo.png" alt="destiny-2-logo" class="destiny2Logo" />
+        <div class="statisticsTitle">Statistics</div>
     </div>
 
+    <div class="searchSection">
+        <div class="usernameTitle">Username:</div>
+        <input @bind="globalNamePrefix" class="usernameEntry" />
+
+        <div class="platformTitle">Platform:</div>
+        <select @bind="membershipType">
+            @foreach (var platform in Enum.GetValues(typeof(Platform)))
+            {
+                <option value="@((int)platform)">@platform</option>
+            }
+        </select>
+
+        <img @onclick="SearchUser" class="searchButton" src="/css/Images/seachIcon.png" />
+        <p class="text-white">@result</p>
+
+    </div>
 </div>
+
+@if (statsResults != null && showStats == true)
+{
+    <div class="statsSection">
+
+        <div class="miscSection whiteBG">
+            <div class="miscTitle">Miscellaneous</div>
+            <table class="miscTable">
+                <tr>
+                    <td>Suicides</td>
+                    <td>@statsResults.Response.allPvE.allTime.suicides.basic.displayValue</td>
+                </tr>
+                <tr>
+                    <td>Strike Deaths</td>
+                    <td>@statsResults.Response.allStrikes.allTime.deaths.basic.displayValue</td>
+                </tr>
+                <tr>
+                    <td>Avg Strike Kill Dist</td>
+                    <td>@statsResults.Response.allStrikes.allTime.averageKillDistance.basic.displayValue</td>
+                </tr>
+                <tr>
+                    <td>Avg Raid Lifespan</td>
+                    <td>@statsResults.Response.raid.allTime.averageLifespan.basic.displayValue</td>
+                </tr>
+                <tr>
+                    <td>Heroic Public Events</td>
+                    <td>@statsResults.Response.allPvE.allTime.heroicPublicEventsCompleted.basic.displayValue</td>
+                </tr>
+                <tr>
+                    <td>Highest Light Level</td>
+                    <td>@statsResults.Response.allPvE.allTime.highestLightLevel.basic.displayValue</td>
+                </tr>
+                <tr>
+                    <td>Adventures Completed</td>
+                    <td>@statsResults.Response.allPvE.allTime.adventuresCompleted.basic.displayValue</td>
+                </tr>
+                <tr>
+                    <td>Raid Revives Performed</td>
+                    <td>@statsResults.Response.raid.allTime.resurrectionsPerformed.basic.displayValue</td>
+                </tr>
+                <tr>
+                    <td>Raid Revives Received</td>
+                    <td>@statsResults.Response.raid.allTime.resurrectionsReceived.basic.displayValue</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="pveSection whiteBG">
+            <div class="pveTitle">PVE</div>
+
+            <div class="multiTable">
+                <table class="pveTableLeft">
+                    <tr>
+                        <td>Activities Cleared</td>
+                        <td>@statsResults.Response.allPvE.allTime.activitiesCleared.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Kills</td>
+                        <td>@statsResults.Response.allPvE.allTime.kills.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Deaths</td>
+                        <td>@statsResults.Response.allPvE.allTime.deaths.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Assists</td>
+                        <td>@statsResults.Response.allPvE.allTime.assists.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Precision Kills</td>
+                        <td>@statsResults.Response.allPvE.allTime.precisionKills.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Orbs Gathered</td>
+                        <td>@statsResults.Response.allPvE.allTime.orbsGathered.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Orbs Dropped</td>
+                        <td>@statsResults.Response.allPvE.allTime.orbsDropped.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Avg Lifespan</td>
+                        <td>@statsResults.Response.allPvE.allTime.averageLifespan.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Best Single Game Kills</td>
+                        <td>@statsResults.Response.allPvE.allTime.bestSingleGameKills.basic.displayValue</td>
+                    </tr>
+                </table>
+
+                <table class="pveTableRight">
+                    <tr>
+                        <td>Super Kills</td>
+                        <td>@statsResults.Response.allPvE.allTime.weaponKillsSuper.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Ability Kills</td>
+                        <td>@statsResults.Response.allPvE.allTime.weaponKillsAbility.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Melee Kills</td>
+                        <td>@statsResults.Response.allPvE.allTime.weaponKillsMelee.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Grenade Kills</td>
+                        <td>@statsResults.Response.allPvE.allTime.weaponKillsGrenade.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Hand Cannon Kills</td>
+                        <td>@statsResults.Response.allPvE.allTime.weaponKillsHandCannon.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Auto-Rifle Kills</td>
+                        <td>@statsResults.Response.allPvE.allTime.weaponKillsAutoRifle.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Sword Kills</td>
+                        <td>@statsResults.Response.allPvE.allTime.weaponKillsSword.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Shotgun Kills</td>
+                        <td>@statsResults.Response.allPvE.allTime.weaponKillsShotgun.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Sniper Kills</td>
+                        <td>@statsResults.Response.allPvE.allTime.weaponKillsSniper.basic.displayValue</td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
+        <div class="pvpSection whiteBG">
+            <div class="pvpTitle">PVP</div>
+
+            <div class="multiTable">
+                <table class="pvpTableLeft">
+                    <tr>
+                        <td>Win:Loss Ratio</td>
+                        <td>@statsResults.Response.allPvP.allTime.winLossRatio.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Kills</td>
+                        <td>@statsResults.Response.allPvP.allTime.kills.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Deaths</td>
+                        <td>@statsResults.Response.allPvP.allTime.deaths.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Assists</td>
+                        <td>@statsResults.Response.allPvP.allTime.assists.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Precision Kills</td>
+                        <td>@statsResults.Response.allPvP.allTime.precisionKills.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Orbs Gathered</td>
+                        <td>@statsResults.Response.allPvP.allTime.orbsGathered.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Orbs Dropped</td>
+                        <td>@statsResults.Response.allPvP.allTime.orbsDropped.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Avg Lifespan</td>
+                        <td>@statsResults.Response.allPvP.allTime.averageLifespan.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Best Single Game Kills</td>
+                        <td>@statsResults.Response.allPvP.allTime.bestSingleGameKills.basic.displayValue</td>
+                    </tr>
+                </table>
+
+                <table class="pvpTableRight">
+                    <tr>
+                        <td>Super Kills</td>
+                        <td>@statsResults.Response.allPvP.allTime.weaponKillsSuper.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Ability Kills</td>
+                        <td>@statsResults.Response.allPvP.allTime.weaponKillsAbility.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Melee Kills</td>
+                        <td>@statsResults.Response.allPvP.allTime.weaponKillsMelee.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Grenade Kills</td>
+                        <td>@statsResults.Response.allPvP.allTime.weaponKillsGrenade.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Hand Cannon Kills</td>
+                        <td>@statsResults.Response.allPvP.allTime.weaponKillsHandCannon.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Auto-Rifle Kills</td>
+                        <td>@statsResults.Response.allPvP.allTime.weaponKillsAutoRifle.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Sword Kills</td>
+                        <td>@statsResults.Response.allPvP.allTime.weaponKillsSword.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Shotgun Kills</td>
+                        <td>@statsResults.Response.allPvP.allTime.weaponKillsShotgun.basic.displayValue</td>
+                    </tr>
+                    <tr>
+                        <td>Sniper Kills</td>
+                        <td>@statsResults.Response.allPvP.allTime.weaponKillsSniper.basic.displayValue</td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+}
+
 
 @code {
 

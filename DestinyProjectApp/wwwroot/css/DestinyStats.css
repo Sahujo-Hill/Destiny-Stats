@@ -7,7 +7,7 @@ main {
     width: 100%;
     height: 100%;
     display: flex;
-
+    
 }
 
 input {
@@ -18,7 +18,7 @@ input {
 
 .frame {
     width: 100%;
-    height: 1080px;
+    height: 100%;
 }
 
 .whiteBG {
@@ -302,39 +302,75 @@ input {
         line-height: 150%;
     }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1000px) {
 
-    html {
-        background-color: black;
+    article {
+        width: 100%;
+        height: 100%;
     }
 
-    .titleSection{
-        width: 70%;
-        height: auto;
+    .page {
+        height: 100%;
+        width: 100%;
+    }
+
+    body {
+        height: 100%;
+        width: 100%;
+    }
+
+    .frame {
+        width: 100%;
+        height: 100%;
+    }
+
+    main {
+        height: 100%;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    html {
+        width: 100%;
+        height: 100%;
+        background-color: black;
+    }
+    .mainContainer {
+        width: 95%;
+    }
+
+    .titleSection {
+        height: 100%;
+        width: 100%;
     }
 
     .destiny2Logo {
         width: 80%;
-        height: auto;
-        padding: 30px;
-        padding-bottom: 10px;
+        height: 80%;
+        margin: 0px;
+        padding-top: 4%;
+        padding-left: 4%;
     }
 
     .statisticsTitle {
         font-size: 24px;
         letter-spacing: 10px;
-        padding-left: 10px;
+        padding-top: 4%;
+        padding-left: 4%;
     }
 
     .statsSection {
         flex-direction: column;
-        width: 80%;
         height: 100%;
+        width: 100%;
+        background-image: none;
+        gap: 5%;
+        margin-bottom: 5%;
     }
 
     .searchSection {
         flex-direction: column;
-        width: 400px;
+        width: 90%;
         padding: 20px;
     }
 
@@ -344,8 +380,7 @@ input {
 
     .pveSection {
         padding: 20px;
-        width: 70%;
-        height: auto;
+        width: 100%;
         flex-shrink: 0;
         flex-direction: column;
         background: #D9D9D9;
@@ -354,11 +389,15 @@ input {
 
     .pvpSection {
         padding: 20px;
-        width: 70%;
-        height: auto;
+        width: 100%; 
         flex-shrink: 0;
         flex-direction: column;
         background: #D9D9D9;
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+
+    }
+
+    .miscSection {
+        width: 100%;
     }
 }
