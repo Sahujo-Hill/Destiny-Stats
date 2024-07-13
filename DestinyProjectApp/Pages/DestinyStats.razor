@@ -17,11 +17,18 @@
             <input @bind="globalNamePrefix" class="usernameEntry"/>
 
             <div class="platformTitle">Platform:</div>
-            <input class="platformEntry"/>
+            <select @bind="membershipType">
+                @foreach(var platform in Enum.GetValues(typeof(Platform)))
+                {
+                    <option value="@((int)platform)">@platform</option>
+                }
+            </select>
 
-                <img @onclick="SearchUser" class="searchButton" src="/css/Images/seachIcon.png"/>
+            <img @onclick="SearchUser" class="searchButton" src="/css/Images/seachIcon.png"/>
+            <p class="text-white">@result</p>
+
         </div>
-        @if (statsResults != null)
+        @if (statsResults != null && showStats == true)
         {
             <div class="statsSection">
 
@@ -257,18 +264,31 @@
     long characterID;
     long membershipid;
     int membershipType;
+    private bool showStats = false;
+
+    public enum Platform
+    {
+        None,
+        Xbox,
+        Playstation,
+        Steam,
+        Blizzard,
+        Stadia,
+        Egs,
+    }
 
 
     private async Task GetStats()
     {
         try
         {
-            statsResults = await _apihelper.StatsSearch(0, membershipid, 1);
-
+            statsResults = await _apihelper.StatsSearch(0, membershipid, membershipType);
+            showStats = true;
         }
         catch (HttpRequestException ex)
         {
-            result = "error";
+            result = "User not found!";
+            showStats = false;
         }
     }
 
@@ -277,15 +297,27 @@
         try
         {
             membershipid = await _apihelper.SearchByGlobalNamePost(globalNamePrefix, page);
-            await GetStats(); // Call GetStats with the extracted membershipid
+            if (membershipid == null)
+            {
+                result = "User not found!";
+                showStats = false;
+            }
+            else
+            {
+                result = "";
+                showStats = true;
+                await GetStats();
+            }
         }
         catch (HttpRequestException ex)
         {
             result = $"An error occurred: {ex.Message}";
+            showStats = false;
         }
         catch (JsonException ex)
         {
             result = $"An error occurred while parsing the response: {ex.Message}";
+            showStats = false;
         }
     }
 }

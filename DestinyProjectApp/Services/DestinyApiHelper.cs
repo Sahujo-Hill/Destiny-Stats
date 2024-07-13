@@ -33,17 +33,26 @@ namespace DestinyProjectApp.Services
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(responseString);
                 using (JsonDocument doc = JsonDocument.Parse(responseString))
                 {
-                    var root = doc.RootElement;
-                    var membershipId = root
-                        .GetProperty("Response")
-                        .GetProperty("searchResults")[0]
-                        .GetProperty("destinyMemberships")[0]
-                        .GetProperty("membershipId")
-                        .GetString();
 
-                    return long.Parse(membershipId);
+                    var root = doc.RootElement;
+                    if (root.TryGetProperty("Response", out var responseProperty) &&
+                    responseProperty.TryGetProperty("searchResults", out var searchResultsProperty) &&
+                    searchResultsProperty.GetArrayLength() > 0 &&
+                    searchResultsProperty[0].TryGetProperty("destinyMemberships", out var destinyMembershipsProperty) &&
+                     destinyMembershipsProperty.GetArrayLength() > 0 &&
+                    destinyMembershipsProperty[0].TryGetProperty("membershipId", out var membershipIdProperty))
+                    {
+                        var membershipId = membershipIdProperty.GetString();
+                        return long.Parse(membershipId);
+                    }
+                    else
+                    {
+                        throw new HttpRequestException("User not found!");
+                    }
+
                 }
             }
             else
@@ -53,7 +62,7 @@ namespace DestinyProjectApp.Services
         }
 
 
-    
+
 
 
         public async Task<Root> StatsSearch(long characterID, long membershipID, int membershipType)
