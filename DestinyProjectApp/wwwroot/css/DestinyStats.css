@@ -378,6 +378,26 @@ input {
         font-size: 22px;
     }
 
+    .multiTable {
+        width: 100%;
+    }
+
+    .pveTableLeft {
+        width: 50%;
+    }
+
+    .pveTableRight {
+        width: 50%;
+    }
+
+    .pvpTableLeft {
+        width: 50%;
+    }
+
+    .pveTableRight {
+        width: 50%;
+    }
+
     .pveSection {
         padding: 20px;
         width: 100%;
@@ -400,4 +420,21 @@ input {
     .miscSection {
         width: 100%;
     }
+
+    .pveTableRight td {
+        font-size: 10px;
+    }
+
+    .pvpTableLeft td {
+        font-size: 10px;
+    }
+
+    .pveTableLeft td {
+        font-size: 10px;
+    }
+
+    .pvpTableRight td {
+        font-size: 10px;
+    }
+
 }
