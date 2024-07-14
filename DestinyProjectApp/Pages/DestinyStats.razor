@@ -14,7 +14,7 @@
         <input @bind="globalNamePrefix" class="usernameEntry" />
 
         <div class="platformTitle">Platform:</div>
-        <select @bind="membershipType">
+        <select class="usernameEntry" @bind="membershipType">
             @foreach (var platform in Enum.GetValues(typeof(Platform)))
             {
                 <option value="@((int)platform)">@platform</option>
