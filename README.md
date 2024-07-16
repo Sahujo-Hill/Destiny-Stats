@@ -1,4 +1,4 @@
-This project makes use of Bungie's Destiny api to make a POST request, filter some data, make a GET request using the data from the POST and then display this in a conditional interface with some contrasting design elements. For this project, I wanted to make something more relevant to my own personal likings.<br></br>
+This project makes use of Bungie's Destiny api to make a POST request, filter some data, make a GET request using the data from the POST and then display this in a conditional interface with some contrasting design elements. For this project, I wanted to make something more relevant to my own personal likings. This project best demonstrates my C# skills.<br></br>
 ### It contains:
 - User entry of Username and (gaming) Platform via a dropdown
 - Use of backend HTTP requests
