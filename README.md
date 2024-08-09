@@ -4,7 +4,7 @@ This project makes use of Bungie's Destiny api to make a POST request, filter so
 - Use of backend HTTP requests
 - JSON Deserialization
 - Parsing data into readable formats
-- Exception catching with errors annouced to the user
+- Exception catching with errors announced to the user
 - Nice mobile view/small screen view
 - ---
 
